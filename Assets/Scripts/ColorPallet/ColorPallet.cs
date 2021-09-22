@@ -11,6 +11,8 @@ public class ColorPallet : MonoBehaviour
     public static ColorPallet instance;
     public Color[] Pallet { get; private set; }
 
+    [SerializeField] private bool randomizeAlpha = false;
+
     private void Start()
     {
         if(instance != null && instance != this)
@@ -26,7 +28,7 @@ public class ColorPallet : MonoBehaviour
     public void Init()
     {
         Pallet = new Color[C_DEFAULT_INIT_PALLET_SIZE];
-        RandomizeColors();
+        RandomizeColors(randomizeAlpha);
     }
 
     /// <summary>
