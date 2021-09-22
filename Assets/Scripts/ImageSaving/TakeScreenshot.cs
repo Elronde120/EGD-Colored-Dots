@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
- 
- 
+using System.Threading;
+
+
 public class TakeScreenshot : MonoBehaviour {
 //TODO: Account for Mobile, since it returns immediately unlike PC
 
@@ -15,9 +16,25 @@ public class TakeScreenshot : MonoBehaviour {
     
     public void PCCaptureScreen(string filePath)
     {
-        CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
-#if !UNITY_WEBGL || UNITY_EDITOR
-        StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_WINDOWS_SAVE_LOCATION + filePath, objectsToDisable));
+#if !UNITY_WEBGL || UNITY_EDITOR || UNITY_STANDALONE
+        
+        if (OnOSX())
+        {
+            CheckDirectory(Application.dataPath + C_MAC_SAVE_LOCATION);
+            StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_MAC_SAVE_LOCATION + filePath, objectsToDisable));
+        }
+        else if (OnLinux())
+        {
+            CheckDirectory(Application.dataPath + C_LINUX_SAVE_LOCATION);
+            StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_LINUX_SAVE_LOCATION + filePath, objectsToDisable));
+        }
+        else if (OnWindows())
+        {
+            CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
+            StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_WINDOWS_SAVE_LOCATION + filePath, objectsToDisable));
+        }
+
+        
 #endif
     }
 
@@ -27,6 +44,21 @@ public class TakeScreenshot : MonoBehaviour {
         {
             Directory.CreateDirectory(filePath);
         }
+    }
+
+    private bool OnOSX()
+    {
+        return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
+    }
+    
+    private bool OnLinux()
+    {
+        return Application.platform == RuntimePlatform.LinuxEditor || Application.platform == RuntimePlatform.LinuxPlayer;
+    }
+    
+    private bool OnWindows()
+    {
+        return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
     }
     
 
