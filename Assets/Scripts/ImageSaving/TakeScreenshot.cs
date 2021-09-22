@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.IO;
@@ -11,33 +12,45 @@ public class TakeScreenshot : MonoBehaviour {
     private const string C_LINUX_SAVE_LOCATION = "/../Screenshots/";
     private const string C_WINDOWS_SAVE_LOCATION = "/../Screenshots/";
     private const string C_MAC_SAVE_LOCATION = "/../Screenshots/";
+    private const string C_FILE_EXTENSION_PNG = ".png";
     
     [SerializeField] private GameObject[] objectsToDisable;
     
-    public void PCCaptureScreen(string filePath)
+    public void PCCaptureScreen()
     {
 #if !UNITY_WEBGL || UNITY_EDITOR || UNITY_STANDALONE
         
         if (OnOSX())
         {
             CheckDirectory(Application.dataPath + C_MAC_SAVE_LOCATION);
-            StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_MAC_SAVE_LOCATION + filePath, objectsToDisable));
+            StartCoroutine(PCCaptureScreenCor(
+                Application.dataPath + C_MAC_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
+                objectsToDisable));
         }
         else if (OnLinux())
         {
             CheckDirectory(Application.dataPath + C_LINUX_SAVE_LOCATION);
-            StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_LINUX_SAVE_LOCATION + filePath, objectsToDisable));
+            StartCoroutine(PCCaptureScreenCor(
+                Application.dataPath + C_LINUX_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
+                objectsToDisable));
         }
         else if (OnWindows())
         {
             CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
-            StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_WINDOWS_SAVE_LOCATION + filePath, objectsToDisable));
+            StartCoroutine(PCCaptureScreenCor(
+                Application.dataPath + C_WINDOWS_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
+                objectsToDisable));
         }
 
         
 #endif
     }
 
+    string getFormattedTimestamp()
+    {
+        return DateTime.UtcNow.ToString("yyyyMMddhhmmss");
+    }
+    
     private void CheckDirectory(string filePath)
     {
         if (!Directory.Exists(filePath))
@@ -98,7 +111,7 @@ public class TakeScreenshot : MonoBehaviour {
         Debug.Log (image_url);
  
         
-        SaveScreenshotWebGL("test file", image_url);
+        SaveScreenshotWebGL(getFormattedTimestamp() + C_FILE_EXTENSION_PNG, image_url);
         
         
         foreach (var obj in _objectsToDisable)
