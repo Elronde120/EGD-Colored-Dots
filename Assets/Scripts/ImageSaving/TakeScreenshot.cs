@@ -20,21 +20,21 @@ public class TakeScreenshot : MonoBehaviour {
     {
 #if !UNITY_WEBGL || UNITY_EDITOR || UNITY_STANDALONE
         
-        if (OnOSX())
+        if (OSDeterminator.OnOSX())
         {
             CheckDirectory(Application.dataPath + C_MAC_SAVE_LOCATION);
             StartCoroutine(PCCaptureScreenCor(
                 Application.dataPath + C_MAC_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
                 objectsToDisable));
         }
-        else if (OnLinux())
+        else if (OSDeterminator.OnLinux())
         {
             CheckDirectory(Application.dataPath + C_LINUX_SAVE_LOCATION);
             StartCoroutine(PCCaptureScreenCor(
                 Application.dataPath + C_LINUX_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
                 objectsToDisable));
         }
-        else if (OnWindows())
+        else if (OSDeterminator.OnWindows())
         {
             CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
             StartCoroutine(PCCaptureScreenCor(
@@ -59,20 +59,7 @@ public class TakeScreenshot : MonoBehaviour {
         }
     }
 
-    private bool OnOSX()
-    {
-        return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
-    }
     
-    private bool OnLinux()
-    {
-        return Application.platform == RuntimePlatform.LinuxEditor || Application.platform == RuntimePlatform.LinuxPlayer;
-    }
-    
-    private bool OnWindows()
-    {
-        return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
-    }
     
 
     public void WebGLScreenshot () {
