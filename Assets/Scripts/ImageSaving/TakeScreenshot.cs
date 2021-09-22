@@ -1,19 +1,32 @@
 using UnityEngine;
 using System.Collections;
+using System.IO;
 using System.Runtime.InteropServices;
  
  
 public class TakeScreenshot : MonoBehaviour {
 //TODO: Account for Mobile, since it returns immediately unlike PC
-    
+
+    private const string C_LINUX_SAVE_LOCATION = "/../Screenshots/";
+    private const string C_WINDOWS_SAVE_LOCATION = "/../Screenshots/";
+    private const string C_MAC_SAVE_LOCATION = "/../Screenshots/";
     
     [SerializeField] private GameObject[] objectsToDisable;
     
     public void PCCaptureScreen(string filePath)
     {
+        CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
 #if !UNITY_WEBGL || UNITY_EDITOR
-        StartCoroutine(PCCaptureScreenCor(filePath, objectsToDisable));
+        StartCoroutine(PCCaptureScreenCor(Application.dataPath + C_WINDOWS_SAVE_LOCATION + filePath, objectsToDisable));
 #endif
+    }
+
+    private void CheckDirectory(string filePath)
+    {
+        if (!Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
     }
     
 
