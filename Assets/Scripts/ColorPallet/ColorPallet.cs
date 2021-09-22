@@ -8,10 +8,15 @@ public class ColorPallet : MonoBehaviour
 {
     private const int C_DEFAULT_INIT_PALLET_SIZE = 5;
 
+    public static ColorPallet instance;
     public Color[] Pallet { get; private set; }
 
     private void Start()
     {
+        if(instance != null && instance != this)
+            Destroy(this);
+        
+        instance = this;
         Init();
     }
 
@@ -56,5 +61,14 @@ public class ColorPallet : MonoBehaviour
         {
             Pallet[colorPalletIndex].a = Random.Range(0f, 1f);
         }
+    }
+
+    /// <summary>
+    /// Returns a random color from the <see cref="Pallet"/>
+    /// </summary>
+    /// <returns></returns>
+    public Color PickColor()
+    {
+        return Pallet[Random.Range(0, Pallet.Length)];
     }
 }
