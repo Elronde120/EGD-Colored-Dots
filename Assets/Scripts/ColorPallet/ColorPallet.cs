@@ -18,7 +18,6 @@ public class ColorPallet : MonoBehaviour
         if(instance != null && instance != this)
             Destroy(this);
         
-        DontDestroyOnLoad(this);
         instance = this;
         Init();
     }

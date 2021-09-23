@@ -10,6 +10,7 @@ public class DotSpawner : MonoBehaviour
 	public float displayRadius =1;
     public float minRadius = 0.1f;
     public float maxRadius = 1;
+    public bool generateOnStart = true;
 
     [SerializeField] GameObject dotPrefab;
 	List<(Vector2, float)> points;
@@ -19,18 +20,18 @@ public class DotSpawner : MonoBehaviour
     private void Start() {
         points = PoissonDiscSampling.GeneratePoints(minRadius, maxRadius, regionSize, rejectionSamples);
         dots = new List<GameObject>();
-        DrawDots();
-        transform.position -= (Vector3)regionSize / 2;
+        if(generateOnStart) DrawDots();
     }
 
 
     //Instantiates the random dots with their radii and gives them a random color
-    void DrawDots(){
+    public void DrawDots(){
         foreach((Vector2, float) point in points){
             GameObject circle = Instantiate(dotPrefab, point.Item1, Quaternion.identity, transform);
             circle.transform.localScale = new Vector3(point.Item2, point.Item2, point.Item2);
             circle.GetComponent<SpriteRenderer>().color = ColorPallet.instance.PickColor();           
             dots.Add(circle);
         }
+        transform.position -= (Vector3)regionSize / 2;
     }
 }
