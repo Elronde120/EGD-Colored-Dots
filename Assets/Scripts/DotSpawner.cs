@@ -67,6 +67,5 @@ public class DotSpawner : MonoBehaviour
             circle.GetComponent<SpriteRenderer>().color = ColorPallet.instance.PickColor();           
             dots.Add(circle);
         }
-        transform.position -= (Vector3)regionSize / 2;
     }
 }
