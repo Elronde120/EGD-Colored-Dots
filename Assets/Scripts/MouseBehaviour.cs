@@ -20,7 +20,7 @@ public class MouseBehaviour : MonoBehaviour
     }
 
     private void RegisterClicks(){
-        if(Input.GetMouseButton(0)){
+        if(Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftShift)){
             pullEffector.SetActive(true);  
             pushEffector.SetActive(false);  
         }
