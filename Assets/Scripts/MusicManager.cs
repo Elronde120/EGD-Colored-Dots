@@ -56,6 +56,45 @@ public class MusicManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Lerps the volume from startVolume to endVolume over time T
+    /// </summary>
+    /// <remarks>
+    /// Calls a coroutine to lerp, will return immediately 
+    /// </remarks>
+    /// <param name="startVolume">The start volume</param>
+    /// <param name="endVolume">The end volume</param>
+    /// <param name="T">How long to lerp for</param>
+    public void SmoothChangeVolume(float startVolume, float endVolume, float T)
+    {
+        StartCoroutine(_LerpVolumeCor(startVolume, endVolume, T));
+    }
+    
+    /// <summary>
+    /// Lerps the volume from current volume to endVolume over time T
+    /// </summary>
+    /// <remarks>
+    /// Calls a coroutine to lerp, will return immediately 
+    /// </remarks>
+    /// <param name="endVolume">The end volume</param>
+    /// <param name="T">How long to lerp for</param>
+    public void SmoothChangeVolume(float endVolume, float T)
+    {
+        StartCoroutine(_LerpVolumeCor(_source.volume, endVolume, T));
+    }
+
+    private IEnumerator _LerpVolumeCor(float startVolume, float endVolume, float T)
+    {
+        _source.volume = startVolume;
+        float currentTime = 0f;
+        while (Math.Abs(_source.volume - endVolume) > 0.001f)
+        {
+            _source.volume = Mathf.Lerp(startVolume, endVolume, currentTime / T);
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    /// <summary>
     /// Stops the music immediately, if playing
     /// </summary>
     public void Stop()
