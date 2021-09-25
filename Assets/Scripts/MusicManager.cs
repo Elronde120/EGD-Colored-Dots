@@ -23,7 +23,7 @@ public class MusicManager : MonoBehaviour
     {
         SetVolume(C_DEFAULT_VOLUME);
         if (playTrackZeroOnStart)
-            SwitchTrack(0);
+            SwitchTrack(0, true);
     }
 
     // Update is called once per frame
@@ -36,9 +36,10 @@ public class MusicManager : MonoBehaviour
     /// Switches the current track to the given track, plays immediately
     /// </summary>
     /// <param name="trackIndex">The track to play on <see cref="musicTracks"/></param>
-    /// <param name="delay">How long to delay playing</param>
+    /// <param name="playImmediate">Should the audio source play after switching</param>
+    /// <param name="delay">How long to delay playing, if playImmediate is true</param>
     /// <returns>True if switching and playing was successful. False otherwise</returns>
-    public bool SwitchTrack(int trackIndex, ulong delay = ulong.MinValue)
+    public bool SwitchTrack(int trackIndex, bool playImmediate, ulong delay = ulong.MinValue)
     {
         if (trackIndex < 0 || trackIndex >= musicTracks.Length)
         {
@@ -50,7 +51,9 @@ public class MusicManager : MonoBehaviour
 
         Stop();
         _source.clip = musicTracks[trackIndex];
-        Resume(delay);
+        if(playImmediate)
+            Resume(delay);
+        
         return true;
 
     }
