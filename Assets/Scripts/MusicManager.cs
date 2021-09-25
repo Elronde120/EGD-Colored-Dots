@@ -6,14 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class MusicManager : MonoBehaviour
 {
-
+    public static MusicManager instance;
     public bool playTrackZeroOnStart = false;
     [SerializeField] private AudioClip[] musicTracks = new AudioClip[0];
     private AudioSource _source;
+    private float C_DEFAULT_VOLUME = 0.5F;
+
+    private void Awake()
+    {
+        _source = GetComponent<AudioSource>();
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        _source = GetComponent<AudioSource>();
+        SetVolume(C_DEFAULT_VOLUME);
         if (playTrackZeroOnStart)
             SwitchTrack(0);
     }
@@ -67,5 +75,14 @@ public class MusicManager : MonoBehaviour
         _source.Play();
     }
 
+    /// <summary>
+    /// Sets the volume of the player. Clamped between 0-1 inclusive.
+    /// </summary>
+    /// <param name="newVolume">The new volume level</param>
+    public void SetVolume(float newVolume)
+    {
+        _source.volume = Mathf.Clamp(newVolume, 0f, 1f);
+    }
+    
 
 }
