@@ -8,9 +8,12 @@ public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance;
     public bool playTrackZeroOnStart = false;
+    
+    private const float C_DEFAULT_VOLUME = 0.5F;
+    
     [SerializeField] private AudioClip[] musicTracks = new AudioClip[0];
     private AudioSource _source;
-    private float C_DEFAULT_VOLUME = 0.5F;
+    
 
     private void Awake()
     {
@@ -24,12 +27,6 @@ public class MusicManager : MonoBehaviour
         SetVolume(C_DEFAULT_VOLUME);
         if (playTrackZeroOnStart)
             SwitchTrack(0, true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     /// <summary>
@@ -114,7 +111,7 @@ public class MusicManager : MonoBehaviour
     /// <param name="delay"></param>
     public void Resume(ulong delay = ulong.MinValue)
     {
-        _source.Play();
+        _source.Play(delay);
     }
 
     /// <summary>
