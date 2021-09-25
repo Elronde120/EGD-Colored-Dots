@@ -8,6 +8,8 @@ public class ColorPallet : MonoBehaviour
 {
     private const int C_DEFAULT_INIT_PALLET_SIZE = 5;
 
+    public float adjustmentRange = .1f;
+
     public static ColorPallet instance;
     public Color[] Pallet { get; private set; }
 
@@ -72,5 +74,15 @@ public class ColorPallet : MonoBehaviour
     public Color PickColor()
     {
         return Pallet[Random.Range(0, Pallet.Length)];
+    }
+
+    /// <summary>
+    /// Returns a random color with a slight offset <see cref="Pallet"/>
+    /// </summary>
+    /// <returns>The picked color</returns>
+    public Color PickColorSlightAdjustment()
+    {
+        return new Color(Random.Range(-adjustmentRange, adjustmentRange), Random.Range(-adjustmentRange, adjustmentRange), Random.Range(-adjustmentRange, adjustmentRange))
+        + Pallet[Random.Range(0, Pallet.Length)];
     }
 }
