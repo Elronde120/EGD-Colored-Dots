@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -8,9 +9,8 @@ public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance;
     public bool playTrackZeroOnStart = false;
-    
-    private const float C_DEFAULT_VOLUME = 0.5F;
-    
+    public AudioClip[] MusicTracks => musicTracks;
+
     [SerializeField] private AudioClip[] musicTracks = new AudioClip[0];
     private AudioSource _source;
     
@@ -24,7 +24,6 @@ public class MusicManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetVolume(C_DEFAULT_VOLUME);
         if (playTrackZeroOnStart)
             SwitchTrack(0, true);
     }
@@ -121,6 +120,17 @@ public class MusicManager : MonoBehaviour
     public void SetVolume(float newVolume)
     {
         _source.volume = Mathf.Clamp(newVolume, 0f, 1f);
+    }
+
+
+    public float GetTimeRemaining()
+    {
+        if (_source.clip == null)
+        {
+            return -99f;
+        }
+        
+        return _source.clip.length - _source.time;
     }
     
 
