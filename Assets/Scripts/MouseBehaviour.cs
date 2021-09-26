@@ -46,7 +46,7 @@ public class MouseBehaviour : MonoBehaviour
                     g = dotSpawner.dots[dotsIndex];
                 }
                 dotsIndex++;
-                if(AreColorsSimilar(g.GetComponent<SpriteRenderer>().color, currentColor)){
+                if(AreColorsSimilar(g.GetComponentInChildren<SpriteRenderer>().color, currentColor)){
                     g.layer = 6;
                 }
                 else{
@@ -78,12 +78,12 @@ public class MouseBehaviour : MonoBehaviour
                         coloredPushEffector.SetActive(true);
 
                         //if we clicked a dot, choose that one to pull colors by
-                        var color = clickedDot.collider.GetComponent<SpriteRenderer>().color;
+                        var color = clickedDot.collider.GetComponentInChildren<SpriteRenderer>().color;
                         currentColor = color;
                         var sphereCast = Physics2D.OverlapCircleAll(transform.position, 5);
                         foreach(var item in sphereCast){
                             if(item.gameObject.layer == 3) continue;
-                            if(AreColorsSimilar(item.GetComponent<SpriteRenderer>().color, color)){
+                            if(AreColorsSimilar(item.GetComponentInChildren<SpriteRenderer>().color, color)){
                                 //turn the layer to the correct one
                                 item.gameObject.layer = 6;
                             }
