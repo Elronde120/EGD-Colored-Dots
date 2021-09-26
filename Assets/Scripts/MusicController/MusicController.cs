@@ -22,7 +22,10 @@ public class MusicController : MonoBehaviour
     private void Update()
     {
         //if the current song is ending, fade out.
-        
+        if (_IsCurrentSongEnding())
+        {
+            MusicManager.instance.SmoothChangeVolume(0, 1.5f);
+        }
         //if the current song ended, choose next song and fade in
         
     }
@@ -35,6 +38,17 @@ public class MusicController : MonoBehaviour
             result = Random.Range(0, _maxSongIndex);
         }
 
-        return 0;
+        return result;
+    }
+
+    private bool _IsCurrentSongEnding()
+    {
+        float timeRemaining = MusicManager.instance.GetTimeRemaining();
+        if (timeRemaining == -99f)
+        {
+            return false;
+        }
+
+        return timeRemaining < 1.5f;
     }
 }
