@@ -13,19 +13,13 @@ public class MusicManager : MonoBehaviour
 
     [SerializeField] private AudioClip[] musicTracks = new AudioClip[0];
     private AudioSource _source;
-    
+
+    private Coroutine smoothLerpVolumeCoroutine;
 
     private void Awake()
     {
         _source = GetComponent<AudioSource>();
         instance = this;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (playTrackZeroOnStart)
-            SwitchTrack(0, true);
     }
 
     /// <summary>
@@ -65,7 +59,12 @@ public class MusicManager : MonoBehaviour
     /// <param name="T">How long to lerp for</param>
     public void SmoothChangeVolume(float startVolume, float endVolume, float T)
     {
-        StartCoroutine(_LerpVolumeCor(startVolume, endVolume, T));
+        if (smoothLerpVolumeCoroutine != null)
+        {
+            Debug.Log("here");
+            return;
+        }
+        smoothLerpVolumeCoroutine = StartCoroutine(_LerpVolumeCor(startVolume, endVolume, T));
     }
     
     /// <summary>
@@ -78,7 +77,11 @@ public class MusicManager : MonoBehaviour
     /// <param name="T">How long to lerp for</param>
     public void SmoothChangeVolume(float endVolume, float T)
     {
-        StartCoroutine(_LerpVolumeCor(_source.volume, endVolume, T));
+        if (smoothLerpVolumeCoroutine != null)
+        {
+            return;
+        }
+        smoothLerpVolumeCoroutine = StartCoroutine(_LerpVolumeCor(_source.volume, endVolume, T));
     }
 
     private IEnumerator _LerpVolumeCor(float startVolume, float endVolume, float T)
@@ -91,6 +94,8 @@ public class MusicManager : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         }
+
+        smoothLerpVolumeCoroutine = null;
     }
 
     /// <summary>
