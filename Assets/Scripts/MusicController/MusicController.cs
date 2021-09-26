@@ -13,10 +13,7 @@ public class MusicController : MonoBehaviour
     {
         //tell music manager to start playing a song, but fade in (for all songs)
         _maxSongIndex = MusicManager.instance.MusicTracks.Length;
-        MusicManager.instance.SwitchTrack(_ChooseNextSongIndex(_previousSongIndex), false);
-        MusicManager.instance.SetVolume(0);
-        MusicManager.instance.Resume();
-        MusicManager.instance.SmoothChangeVolume(maxVolume, 1.5f);
+        FadeInResume();
 
     }
 
@@ -38,6 +35,28 @@ public class MusicController : MonoBehaviour
         
         
         
+    }
+
+    //To be called by game state manager
+    public void FadeOutStop()
+    {
+        StartCoroutine(_FadeOutStopCor());
+    }
+
+    private IEnumerator _FadeOutStopCor()
+    {
+        MusicManager.instance.SmoothChangeVolume(0, 1.5f);
+        yield return new WaitForSeconds(1.5f);
+        MusicManager.instance.Stop();
+    }
+    
+    //To be called by game state manager
+    public void FadeInResume()
+    {
+        MusicManager.instance.SwitchTrack(_ChooseNextSongIndex(_previousSongIndex), false);
+        MusicManager.instance.SetVolume(0);
+        MusicManager.instance.Resume();
+        MusicManager.instance.SmoothChangeVolume(maxVolume, 1.5f);
     }
     
     private int _ChooseNextSongIndex(int previousSongIndex)
