@@ -12,6 +12,7 @@ public class DotSpawner : MonoBehaviour
     public float minRadius = 0.1f;
     public float maxRadius = 1;
     public bool generateOnStart = true;
+    public bool canSpawn;
 
     public Camera mainCam;
     [SerializeField] GameObject dotPrefab;
@@ -31,7 +32,13 @@ public class DotSpawner : MonoBehaviour
         SpawnDots();    
     }
 
+    public void CanSpawn(bool spawn)
+    {
+        canSpawn = spawn;
+    }
+
     private void SpawnDots(){
+        if (!canSpawn) return;
         if(Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftShift)){
             points.Clear();
             Vector3 mousePos = new Vector3(

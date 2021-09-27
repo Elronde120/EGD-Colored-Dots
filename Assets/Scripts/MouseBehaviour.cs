@@ -16,8 +16,13 @@ public class MouseBehaviour : MonoBehaviour
     public Camera mainCam;
 
     public LayerMask raycastLayerMask;
+    
+    public LineRenderer lineRenderer;
+
+    public float pushPullRadius;
 
     private void Start() {
+        lineRenderer = GetComponent<LineRenderer>();
         pushEffector.SetActive(false);
         pullEffector.SetActive(false);
         coloredPushEffector.SetActive(false);
@@ -28,6 +33,21 @@ public class MouseBehaviour : MonoBehaviour
     private void Update() {
         MoveToMouse();
         RegisterClicks();
+        pushEffector.GetComponent<CircleCollider2D>().radius = pushPullRadius;
+        pullEffector.GetComponent<CircleCollider2D>().radius = pushPullRadius;
+        pullAllEffector.GetComponent<CircleCollider2D>().radius = pushPullRadius;
+        coloredPushEffector.GetComponent<CircleCollider2D>().radius = pushPullRadius;
+        dotSpawner.GetComponent<DotSpawner>().spawnRegionSize = new Vector2(pushPullRadius * 2, pushPullRadius * 2);
+        pushPullRadius += Input.mouseScrollDelta.y * 0.1f;
+        if(pushPullRadius < 0.2f)
+        {
+            pushPullRadius = 0.2f;
+        }
+        if(pushPullRadius > 2f)
+        {
+            pushPullRadius = 2f;
+        }
+        Circle(pushPullRadius, 0.1f);
     }
 
     int dotsIndex = 0;
@@ -82,7 +102,8 @@ public class MouseBehaviour : MonoBehaviour
                         currentColor = color;
                         var sphereCast = Physics2D.OverlapCircleAll(transform.position, 5);
                         foreach(var item in sphereCast){
-                            if(item.gameObject.layer == 3) continue;
+                            if(item.gameObject.layer == 3 || item.gameObject.layer == 5) continue;
+                            print(item);
                             if(AreColorsSimilar(item.GetComponentInChildren<SpriteRenderer>().color, color)){
                                 //turn the layer to the correct one
                                 item.gameObject.layer = 6;
@@ -119,8 +140,9 @@ public class MouseBehaviour : MonoBehaviour
         return false;
     }
 
-    private void MoveToMouse(){
-        if(Time.frameCount < 10) return;
+    private void MoveToMouse()
+    {
+        if (Time.frameCount < 10) return;
 
         Vector3 mousePos = new Vector3(
             Input.mousePosition.x / Screen.width,
@@ -136,5 +158,25 @@ public class MouseBehaviour : MonoBehaviour
         mousePos.x *= 2 * mainCam.orthographicSize * mainCam.aspect;
 
         transform.position = mousePos;
+    }
+
+    public void Circle(float radius, float lineWidth)
+    {
+        var segments = 360;
+        lineRenderer.useWorldSpace = false;
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
+        lineRenderer.positionCount = segments + 1;
+
+        var pointCount = segments + 1; // add extra point to make startpoint and endpoint the same to close the circle
+        var points = new Vector3[pointCount];
+
+        for (int i = 0; i < pointCount; i++)
+        {
+            var rad = Mathf.Deg2Rad * (i * 360f / segments);
+            points[i] = new Vector3(Mathf.Sin(rad) * radius, Mathf.Cos(rad) * radius, 0);
+        }
+
+        lineRenderer.SetPositions(points);
     }
 }
