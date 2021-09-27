@@ -15,26 +15,26 @@ public class MusicController : MonoBehaviour
         _maxSongIndex = MusicManager.instance.MusicTracks.Length;
         FadeInResume();
 
+        /*
+        MusicManager.instance.SongAlmostDone += () =>
+        {
+            MusicManager.instance.SmoothChangeVolume(0, 1.5f);
+        };
+*/
+        MusicManager.instance.SongDone = () =>
+        {
+            int nextSongindex = _ChooseNextSongIndex(_previousSongIndex);
+            _previousSongIndex = nextSongindex;
+            MusicManager.instance.SwitchTrack(nextSongindex, false);
+            MusicManager.instance.Resume();
+            MusicManager.instance.SmoothChangeVolume(maxVolume, 1.5f);
+        };
+
     }
 
     private void Update()
     {
-        if (_IsCurrentSongDone())
-        {
-            //if the current song ended, choose next song and fade in
-            MusicManager.instance.SwitchTrack(_ChooseNextSongIndex(_previousSongIndex), false);
-            MusicManager.instance.SetVolume(0);
-            MusicManager.instance.Resume();
-            MusicManager.instance.SmoothChangeVolume(maxVolume, 1.5f);
-        }
-        else if (_IsCurrentSongEnding())
-        {
-            //if the current song is ending, fade out.
-            MusicManager.instance.SmoothChangeVolume(0, 1.5f);
-        }
-        
-        
-        
+
     }
 
     //To be called by game state manager

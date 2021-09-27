@@ -7,6 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class MusicManager : MonoBehaviour
 {
+    public delegate void MusicState();
+
+    public MusicState SongAlmostDone;
+    public MusicState SongDone;
+    
     public static MusicManager instance;
     public bool playTrackZeroOnStart = false;
     public AudioClip[] MusicTracks => musicTracks;
@@ -15,6 +20,7 @@ public class MusicManager : MonoBehaviour
     private AudioSource _source;
 
     private Coroutine smoothLerpVolumeCoroutine;
+    
 
     private void Awake()
     {
@@ -22,14 +28,26 @@ public class MusicManager : MonoBehaviour
         instance = this;
     }
 
+    private void Update()
+    {
+        Debug.Log(_source.volume);
+        if (GetTimeRemaining() < 1.6f && GetTimeRemaining() > 1.4f)
+        {
+            SongAlmostDone?.Invoke();
+        }
+        else if (GetTimeRemaining() > -0.1f && GetTimeRemaining() < 0.1f)
+        {
+            SongDone?.Invoke();
+        }
+    }
+
     /// <summary>
     /// Switches the current track to the given track, plays immediately
     /// </summary>
     /// <param name="trackIndex">The track to play on <see cref="musicTracks"/></param>
     /// <param name="playImmediate">Should the audio source play after switching</param>
-    /// <param name="delay">How long to delay playing, if playImmediate is true</param>
     /// <returns>True if switching and playing was successful. False otherwise</returns>
-    public bool SwitchTrack(int trackIndex, bool playImmediate, ulong delay = ulong.MinValue)
+    public bool SwitchTrack(int trackIndex, bool playImmediate)
     {
         if (trackIndex < 0 || trackIndex >= musicTracks.Length)
         {
@@ -42,7 +60,7 @@ public class MusicManager : MonoBehaviour
         Stop();
         _source.clip = musicTracks[trackIndex];
         if(playImmediate)
-            Resume(delay);
+            Resume();
         
         return true;
 
@@ -61,7 +79,6 @@ public class MusicManager : MonoBehaviour
     {
         if (smoothLerpVolumeCoroutine != null)
         {
-            Debug.Log("here");
             return;
         }
         smoothLerpVolumeCoroutine = StartCoroutine(_LerpVolumeCor(startVolume, endVolume, T));
@@ -75,13 +92,14 @@ public class MusicManager : MonoBehaviour
     /// </remarks>
     /// <param name="endVolume">The end volume</param>
     /// <param name="T">How long to lerp for</param>
-    public void SmoothChangeVolume(float endVolume, float T)
+    public bool SmoothChangeVolume(float endVolume, float T)
     {
         if (smoothLerpVolumeCoroutine != null)
         {
-            return;
+            return false;
         }
         smoothLerpVolumeCoroutine = StartCoroutine(_LerpVolumeCor(_source.volume, endVolume, T));
+        return true;
     }
 
     private IEnumerator _LerpVolumeCor(float startVolume, float endVolume, float T)
@@ -112,10 +130,9 @@ public class MusicManager : MonoBehaviour
     /// <remarks>
     /// Call <see cref="SwitchTrack"/> if unsure if audio clip is prepared.
     /// </remarks>
-    /// <param name="delay"></param>
-    public void Resume(ulong delay = ulong.MinValue)
+    public void Resume()
     {
-        _source.Play(delay);
+        _source.Play();
     }
 
     /// <summary>
@@ -134,7 +151,9 @@ public class MusicManager : MonoBehaviour
         {
             return -99f;
         }
-        
+
+        //Debug.LogFormat(" _source.time = {0}, _source.clip.length = {1}",
+            //_source.time, _source.clip.length);
         return _source.clip.length - _source.time;
     }
     
