@@ -30,7 +30,6 @@ public class MusicManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_source.volume);
         if (GetTimeRemaining() < 1.6f && GetTimeRemaining() > 1.4f)
         {
             SongAlmostDone?.Invoke();
