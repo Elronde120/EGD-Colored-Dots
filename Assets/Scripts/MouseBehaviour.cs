@@ -98,7 +98,7 @@ public class MouseBehaviour : MonoBehaviour
         }
         else{
             if(Input.GetMouseButton(1)){
-                pullEffector.SetActive(true);
+                pushEffector.SetActive(true);
             }
             else{
                 pullEffector.SetActive(false);
