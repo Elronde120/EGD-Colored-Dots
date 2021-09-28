@@ -22,13 +22,10 @@ public class MusicManager : MonoBehaviour
 
     private Coroutine smoothLerpVolumeCoroutine;
 
-    [SerializeField] private Slider volumeSlider;
-
     private void Awake()
     {
         _source = GetComponent<AudioSource>();
         instance = this;
-        volumeSlider.onValueChanged.AddListener(SetVolume);
     }
 
     private void Update()
