@@ -38,4 +38,9 @@ public class GameStateController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         musicController.FadeInResume();
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
