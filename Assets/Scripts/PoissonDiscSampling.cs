@@ -8,7 +8,6 @@ public static class PoissonDiscSampling{
     public static List<(Vector2, float)> GeneratePoints(float minRadius, float maxRadius, Vector2 region, Vector2 center, List<(Vector2, float)> points, bool initialSpawn, int numSamplesBeforeRejection = 30){
         float cellSize = 0.1f;
         int[,] grid = new int[Mathf.CeilToInt(region.x/cellSize),Mathf.CeilToInt(region.y/cellSize)];
-        Debug.Log(points.Count);
         List<(Vector2, float)> spawnPoints = new List<(Vector2, float)>();
         List<(Vector2, float)> newPoints = new List<(Vector2, float)>();
         for(int i = 0; i < points.Count; i++){

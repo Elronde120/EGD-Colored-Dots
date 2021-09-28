@@ -80,8 +80,9 @@ public class ColorPallet : MonoBehaviour
     /// Returns a random color with a slight offset <see cref="Pallet"/>
     /// </summary>
     /// <returns>The picked color</returns>
-    public Color PickColorSlightAdjustment()
+    public Color PickColorSlightAdjustment(float adjustmentRange)
     {
+        adjustmentRange = .2f * adjustmentRange;
         return new Color(Random.Range(-adjustmentRange, adjustmentRange), Random.Range(-adjustmentRange, adjustmentRange), Random.Range(-adjustmentRange, adjustmentRange))
         + Pallet[Random.Range(0, Pallet.Length)];
     }
