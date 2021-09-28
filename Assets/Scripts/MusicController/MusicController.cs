@@ -52,7 +52,9 @@ public class MusicController : MonoBehaviour
     //To be called by game state manager
     public void FadeInResume()
     {
-        MusicManager.instance.SwitchTrack(_ChooseNextSongIndex(_previousSongIndex), false);
+        int nextSongindex = _ChooseNextSongIndex(_previousSongIndex);
+        _previousSongIndex = nextSongindex;
+        MusicManager.instance.SwitchTrack(_ChooseNextSongIndex(nextSongindex), false);
         MusicManager.instance.SetVolume(0);
         MusicManager.instance.Resume();
         MusicManager.instance.SmoothChangeVolume(maxVolume, 1.5f);
