@@ -14,13 +14,12 @@ public class MusicController : MonoBehaviour
         //tell music manager to start playing a song, but fade in (for all songs)
         _maxSongIndex = MusicManager.instance.MusicTracks.Length;
         FadeInResume();
-
-        /*
+        
         MusicManager.instance.SongAlmostDone += () =>
         {
-            MusicManager.instance.SmoothChangeVolume(0, 1.5f);
+            MusicManager.instance.SmoothChangeVolume(0, 1.2f);
         };
-*/
+
         MusicManager.instance.SongDone = () =>
         {
             int nextSongindex = _ChooseNextSongIndex(_previousSongIndex);

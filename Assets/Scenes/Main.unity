@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 181277742}
   - component: {fileID: 181277744}
   - component: {fileID: 181277743}
-  m_Layer: 3
+  m_Layer: 5
   m_Name: ColoredPushEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,6 +243,22 @@ PrefabInstance:
     - target: {fileID: 1353434807524365443, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 9.308105
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160361970877512835, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
+      propertyPath: OnPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1233122162}
+    - target: {fileID: 4160361970877512835, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
+      propertyPath: OnPress.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: WebGLScreenshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160361970877512835, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
+      propertyPath: OnPress.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TakeScreenshot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160361970877512835, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
+      propertyPath: OnPress.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7451829204292763553, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
       propertyPath: m_FontData.m_MinSize
@@ -357,9 +373,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7451829205811768204, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451829205811768204, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1233122162}
+    - target: {fileID: 7451829205811768204, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PCCaptureScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451829205811768204, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TakeScreenshot, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7451829205811768205, guid: 4c29e27f7e9f2d04194b2b9f142c54a0, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -1399,7 +1427,7 @@ GameObject:
   - component: {fileID: 1462713810}
   - component: {fileID: 1462713808}
   - component: {fileID: 1462713809}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1884,7 +1912,7 @@ GameObject:
   - component: {fileID: 1709211702}
   - component: {fileID: 1709211701}
   - component: {fileID: 1709211700}
-  m_Layer: 3
+  m_Layer: 5
   m_Name: PushEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1974,9 +2002,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playTrackZeroOnStart: 1
   musicTracks:
+  - {fileID: 8300000, guid: 52dc6533298da4343a3026a3470b30d0, type: 3}
+  - {fileID: 8300000, guid: d8624d684afdf2a4da1a5cbdc7ec1867, type: 3}
   - {fileID: 8300000, guid: 3441509b5b0c1b9429e99ca050d87962, type: 3}
+  - {fileID: 8300000, guid: 8d94f14fd1be29f4d80c99d399541a30, type: 3}
+  - {fileID: 8300000, guid: 86b4564052a81b64f850a88f3a7ac08d, type: 3}
   - {fileID: 8300000, guid: 2a624e4a9002d7d4fa025e83201dad40, type: 3}
   - {fileID: 8300000, guid: 4c870581973658944915b4619d0fa374, type: 3}
+  - {fileID: 8300000, guid: e725ed453272c594191b0768ea618b42, type: 3}
+  - {fileID: 8300000, guid: 588573c0f8f492643896248637d98999, type: 3}
+  - {fileID: 8300000, guid: 616b45a640c8c2e4e8b85e46ab741908, type: 3}
   - {fileID: 8300000, guid: c86e665d5ea8c7b41876508ab7fe9f3f, type: 3}
 --- !u!82 &1849270599
 AudioSource:
@@ -2219,7 +2254,7 @@ GameObject:
   - component: {fileID: 1965912251}
   - component: {fileID: 1965912250}
   - component: {fileID: 1965912249}
-  m_Layer: 3
+  m_Layer: 5
   m_Name: PullEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2369,7 +2404,7 @@ GameObject:
   - component: {fileID: 2031611796}
   - component: {fileID: 2031611798}
   - component: {fileID: 2031611797}
-  m_Layer: 3
+  m_Layer: 5
   m_Name: PullAllEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
