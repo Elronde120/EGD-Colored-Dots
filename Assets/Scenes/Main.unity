@@ -1716,10 +1716,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2a624e4a9002d7d4fa025e83201dad40, type: 3}
   - {fileID: 8300000, guid: 4c870581973658944915b4619d0fa374, type: 3}
   - {fileID: 8300000, guid: e725ed453272c594191b0768ea618b42, type: 3}
-  - {fileID: 8300000, guid: 588573c0f8f492643896248637d98999, type: 3}
+  - {fileID: 8300000, guid: 063f9675099e6654fb2153f746397fbc, type: 3}
   - {fileID: 8300000, guid: 616b45a640c8c2e4e8b85e46ab741908, type: 3}
-  - {fileID: 8300000, guid: c86e665d5ea8c7b41876508ab7fe9f3f, type: 3}
-  volumeSlider: {fileID: 1326386889}
 --- !u!82 &1849270599
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1843,6 +1841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVolume: 0.5
+  musicVolumeSlider: {fileID: 1326386889}
 --- !u!114 &1874716350 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1652010320731600001, guid: b9d6181e8bc539046b8f21fcf45d1f61, type: 3}
