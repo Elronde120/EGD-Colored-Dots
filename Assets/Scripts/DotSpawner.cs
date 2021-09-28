@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class DotSpawner : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class DotSpawner : MonoBehaviour
     public float maxRadius = 1;
     public bool generateOnStart = true;
     public bool canSpawn;
+
+    public Slider variationSlider;
 
     public Camera mainCam;
     [SerializeField] GameObject dotPrefab;
@@ -71,7 +74,7 @@ public class DotSpawner : MonoBehaviour
         foreach((Vector2, float) point in points){
             GameObject circle = Instantiate(dotPrefab, point.Item1, Quaternion.identity, transform);
             circle.transform.localScale = new Vector3(point.Item2, point.Item2, point.Item2);
-            circle.GetComponentInChildren<SpriteRenderer>().color = ColorPallet.instance.PickColorSlightAdjustment();           
+            circle.GetComponentInChildren<SpriteRenderer>().color = ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value);           
             dots.Add(circle);
         }
     }

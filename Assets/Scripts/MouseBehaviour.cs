@@ -103,7 +103,6 @@ public class MouseBehaviour : MonoBehaviour
                         var sphereCast = Physics2D.OverlapCircleAll(transform.position, 5);
                         foreach(var item in sphereCast){
                             if(item.gameObject.layer == 3 || item.gameObject.layer == 5) continue;
-                            print(item);
                             if(AreColorsSimilar(item.GetComponentInChildren<SpriteRenderer>().color, color)){
                                 //turn the layer to the correct one
                                 item.gameObject.layer = 6;
