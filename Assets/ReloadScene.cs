@@ -6,6 +6,6 @@ using UnityEngine.SceneManagement;
 public class ReloadScene : MonoBehaviour
 {
     public void Reload(){
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }
