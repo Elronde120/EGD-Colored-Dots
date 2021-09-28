@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusicManager : MonoBehaviour
@@ -20,12 +21,14 @@ public class MusicManager : MonoBehaviour
     private AudioSource _source;
 
     private Coroutine smoothLerpVolumeCoroutine;
-    
+
+    [SerializeField] private Slider volumeSlider;
 
     private void Awake()
     {
         _source = GetComponent<AudioSource>();
         instance = this;
+        volumeSlider.onValueChanged.AddListener(SetVolume);
     }
 
     private void Update()
