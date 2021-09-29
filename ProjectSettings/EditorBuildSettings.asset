@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/RandomDotSpawn.unity
-    guid: e9c655c5156069d439bb4cc480179e31
-  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 28f269964a947444691d59a7c0b5ab1d
   m_configObjects: {}
