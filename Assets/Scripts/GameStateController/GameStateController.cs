@@ -16,6 +16,8 @@ public class GameStateController : MonoBehaviour
     [SerializeField] private MusicController musicController;
     [SerializeField] private DotSpawner spawner;
     [SerializeField] private CameraZoom zoom;
+    [SerializeField] private UIAlphaSetter mainMenuUIAlphaSetter;
+    [SerializeField] private UIAlphaSetter dotsUIAlphaSetter;
     
     // Start is called before the first frame update
     void Start()
@@ -37,9 +39,11 @@ public class GameStateController : MonoBehaviour
     private IEnumerator _ToGameStateCor()
     {
         musicController.FadeOutStop();
+        mainMenuUIAlphaSetter.LerpAlpha(0, 0.5f, false);
         zoom.ZoomLerp(10, 1.5f);
         yield return new WaitForSeconds(1.5f);
         spawner.DrawDots(1.5f);
+        dotsUIAlphaSetter.LerpAlpha(1,  1.5f, true);
         yield return new WaitForSeconds(2.5f);
         musicController.FadeInResume();
         _currentState = GameState.Game;
