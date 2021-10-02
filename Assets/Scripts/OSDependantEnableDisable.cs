@@ -36,12 +36,14 @@ public class OSDependantEnableDisable : MonoBehaviour
     {
         foreach (var obj in objects.objectsToEnable)
         {
-            obj.SetActive(true);
+            if(obj)
+                obj.SetActive(true);
         }
         
         foreach (var obj in objects.objectsToDisable)
         {
-            obj.SetActive(false);
+            if(obj)
+                obj.SetActive(false);
         }
     }
 

@@ -36,7 +36,7 @@ public class GameStateController : MonoBehaviour
     private IEnumerator _ToGameStateCor()
     {
         musicController.FadeOutStop();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         spawner.DrawDots(1.5f);
         yield return new WaitForSeconds(2.5f);
         musicController.FadeInResume();
