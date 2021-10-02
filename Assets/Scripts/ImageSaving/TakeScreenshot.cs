@@ -117,9 +117,9 @@ public class TakeScreenshot : MonoBehaviour {
         
         
         //TODO: Account for other operating systems file formats
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(0.1f);
         ScreenCapture.CaptureScreenshot(_filePath);
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(0.1f);
         
         foreach (var obj in _objectsToDisable)
         {
