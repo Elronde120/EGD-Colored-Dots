@@ -14,6 +14,7 @@ public class GameStateController : MonoBehaviour
     private GameState _currentState = GameState.Menu;
 
     [SerializeField] private MusicController musicController;
+    [SerializeField] private DotSpawner spawner;
     
     // Start is called before the first frame update
     void Start()
@@ -35,8 +36,11 @@ public class GameStateController : MonoBehaviour
     private IEnumerator _ToGameStateCor()
     {
         musicController.FadeOutStop();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.5f);
+        spawner.DrawDots(1.5f);
+        yield return new WaitForSeconds(2.5f);
         musicController.FadeInResume();
+        _currentState = GameState.Game;
     }
 
     public void Quit()

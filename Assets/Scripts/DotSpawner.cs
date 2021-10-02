@@ -74,7 +74,20 @@ public class DotSpawner : MonoBehaviour
         foreach((Vector2, float) point in points){
             GameObject circle = Instantiate(dotPrefab, point.Item1, Quaternion.identity, transform);
             circle.transform.localScale = new Vector3(point.Item2, point.Item2, point.Item2);
-            circle.GetComponentInChildren<SpriteRenderer>().color = ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value);           
+            circle.GetComponent<Dot>().ScaleLerp(new Vector3(1,1,1), 0.25f);
+            
+            circle.GetComponentInChildren<SpriteRenderer>().color = variationSlider ? ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value) : ColorPallet.instance.PickColorSlightAdjustment(0);
+            dots.Add(circle);
+        }
+    }
+    
+    public void DrawDots(float scaleTime){
+        foreach((Vector2, float) point in points){
+            GameObject circle = Instantiate(dotPrefab, point.Item1, Quaternion.identity, transform);
+            circle.transform.localScale = new Vector3(point.Item2, point.Item2, point.Item2);
+            circle.GetComponent<Dot>().ScaleLerp(new Vector3(1,1,1), scaleTime);
+            
+            circle.GetComponentInChildren<SpriteRenderer>().color = variationSlider ? ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value) : ColorPallet.instance.PickColorSlightAdjustment(0);
             dots.Add(circle);
         }
     }
