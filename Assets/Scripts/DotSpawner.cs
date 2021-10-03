@@ -80,6 +80,16 @@ public class DotSpawner : MonoBehaviour
             dots.Add(circle);
         }
     }
+
+    public void DestoyDots(float scaleTime)
+    {
+        foreach (var dot in dots)
+        {
+            dot.GetComponent<Dot>().ScaleLerp(new Vector3(0f,0f,0f), scaleTime, true);
+        }
+        dots.Clear();
+        
+    }
     
     public void DrawDots(float scaleTime){
         foreach((Vector2, float) point in points){

@@ -35,6 +35,11 @@ public class GameStateController : MonoBehaviour
     {
         StartCoroutine(_ToGameStateCor());
     }
+    
+    public void ToMenuState()
+    {
+        StartCoroutine(_ToMenuStateCor());
+    }
 
     private IEnumerator _ToGameStateCor()
     {
@@ -47,6 +52,19 @@ public class GameStateController : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         musicController.FadeInResume();
         _currentState = GameState.Game;
+    }
+
+    private IEnumerator _ToMenuStateCor()
+    {
+        musicController.FadeOutStop();
+        dotsUIAlphaSetter.LerpAlpha(0,  1.5f, false);
+        spawner.DestoyDots(1.5f);
+        yield return new WaitForSeconds(1f);
+        zoom.ZoomLerp(15, 1.5f);
+        yield return new WaitForSeconds(1.5f);
+        mainMenuUIAlphaSetter.LerpAlpha(1, 1.5f, true);
+        musicController.FadeInResume();
+        _currentState = GameState.Menu;
     }
 
     public void Quit()

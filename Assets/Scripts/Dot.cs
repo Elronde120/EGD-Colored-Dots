@@ -17,12 +17,12 @@ public class Dot : MonoBehaviour
         
     }
 
-    public void ScaleLerp(Vector3 newScale, float time)
+    public void ScaleLerp(Vector3 newScale, float time, bool destroyOnLerpComplete = false)
     {
-        StartCoroutine(_ScaleLerpCor(newScale, time));
+        StartCoroutine(_ScaleLerpCor(newScale, time, destroyOnLerpComplete));
     }
 
-    private IEnumerator _ScaleLerpCor(Vector3 newScale, float time)
+    private IEnumerator _ScaleLerpCor(Vector3 newScale, float time, bool destroyOnLerpComplete = false)
     {
         Vector3 startScale = spriteTransform.localScale;
         float currentTime = 0f;
@@ -35,5 +35,8 @@ public class Dot : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         }
+        
+        if(destroyOnLerpComplete)
+            Destroy(this.gameObject);
     }
 }
