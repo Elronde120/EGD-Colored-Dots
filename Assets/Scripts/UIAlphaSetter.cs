@@ -34,7 +34,7 @@ public class UIAlphaSetter : MonoBehaviour
         while (Mathf.Abs(graphic.color.a - newAlpha) > Mathf.Epsilon)
         {
             float alpha = Mathf.SmoothStep(colorA, newAlpha, currentTime / time);
-            graphic.color = new Color(graphic.color.r, graphic.color.b, graphic.color.b, alpha);
+            graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, alpha);
             currentTime += Time.deltaTime;
             yield return null;
         }
