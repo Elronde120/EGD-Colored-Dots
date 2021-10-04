@@ -10,7 +10,14 @@ public class UIColorBlock : MonoBehaviour
    [SerializeField] private int colorPalletIndex = 0;
    private void Update()
    {
-      colorImage.color = ColorPallet.instance.Pallet[colorPalletIndex];
+      Color color = new Color
+      {
+         r = ColorPallet.instance.Pallet[colorPalletIndex].r,
+         g = ColorPallet.instance.Pallet[colorPalletIndex].g,
+         b = ColorPallet.instance.Pallet[colorPalletIndex].b,
+         a = colorImage.color.a
+      };
+      colorImage.color = color;
    }
 
    public void RandomizeColor()
