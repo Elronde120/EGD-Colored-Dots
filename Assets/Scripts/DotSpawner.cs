@@ -81,14 +81,17 @@ public class DotSpawner : MonoBehaviour
         }
     }
 
-    public void DestoyDots(float scaleTime)
+    public void HideDots(float scaleTime)
     {
         foreach (var dot in dots)
         {
-            dot.GetComponent<Dot>().ScaleLerp(new Vector3(0f,0f,0f), scaleTime, true);
+            dot.GetComponent<Dot>().ScaleLerp(new Vector3(0f,0f,0f), scaleTime, false);
         }
+    }
+    
+    public void DestroyDots(float scaleTime)
+    {
         dots.Clear();
-        
     }
     
     public void DrawDots(float scaleTime){
@@ -99,6 +102,21 @@ public class DotSpawner : MonoBehaviour
             
             circle.GetComponentInChildren<SpriteRenderer>().color = variationSlider ? ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value) : ColorPallet.instance.PickColorSlightAdjustment(0);
             dots.Add(circle);
+        }
+    }
+    
+    public void ShowDots(float scaleTime)
+    {
+        if (dots.Count > 0)
+        {
+            foreach (var dot in dots)
+            {
+                dot.GetComponent<Dot>().ScaleLerp(new Vector3(1f, 1f, 1f), scaleTime, false);
+            }
+        }
+        else
+        {
+            DrawDots(scaleTime);
         }
     }
 }

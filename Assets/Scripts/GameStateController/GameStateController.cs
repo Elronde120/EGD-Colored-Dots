@@ -47,7 +47,7 @@ public class GameStateController : MonoBehaviour
         mainMenuUIAlphaSetter.LerpAlpha(0, 0.5f, false);
         zoom.ZoomLerp(10, 1.5f);
         yield return new WaitForSeconds(1.5f);
-        spawner.DrawDots(1.5f);
+        spawner.ShowDots(1.5f);
         dotsUIAlphaSetter.LerpAlpha(1,  1.5f, true);
         yield return new WaitForSeconds(2.5f);
         musicController.FadeInResume();
@@ -58,7 +58,7 @@ public class GameStateController : MonoBehaviour
     {
         musicController.FadeOutStop();
         dotsUIAlphaSetter.LerpAlpha(0,  1.5f, false);
-        spawner.DestoyDots(1.5f);
+        spawner.HideDots(1.5f);
         yield return new WaitForSeconds(1f);
         zoom.ZoomLerp(15, 1.5f);
         yield return new WaitForSeconds(1.5f);
