@@ -10,6 +10,7 @@ public class GameStateSaver : MonoBehaviour
     private const string C_WINDOWS_SAVE_LOCATION = "/../Saves/";
     private const string C_MAC_SAVE_LOCATION = "/../Saves/";
     private const string C_FILE_EXTENSION_TXT = ".txt";
+    private const string C_FILE_NAME = "save";
     
     public void SaveDotData()
     {
@@ -20,17 +21,17 @@ public class GameStateSaver : MonoBehaviour
         if (OSDeterminator.OnOSX())
         {
             JSONFileIO.CheckDirectory(Application.dataPath + C_MAC_SAVE_LOCATION);
-            JSONFileIO.SaveToFile(Application.dataPath + C_MAC_SAVE_LOCATION + C_FILE_EXTENSION_TXT, jsonData);
+            JSONFileIO.SaveToFile(Application.dataPath + C_MAC_SAVE_LOCATION + C_FILE_NAME + C_FILE_EXTENSION_TXT, jsonData);
         }
         else if (OSDeterminator.OnLinux())
         {
             JSONFileIO.CheckDirectory(Application.dataPath + C_LINUX_SAVE_LOCATION);
-            JSONFileIO.SaveToFile(Application.dataPath + C_LINUX_SAVE_LOCATION + C_FILE_EXTENSION_TXT, jsonData);
+            JSONFileIO.SaveToFile(Application.dataPath + C_LINUX_SAVE_LOCATION + C_FILE_NAME +  C_FILE_EXTENSION_TXT, jsonData);
         }
         else if (OSDeterminator.OnWindows())
         {
             JSONFileIO.CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
-            JSONFileIO.SaveToFile(Application.dataPath + C_WINDOWS_SAVE_LOCATION + C_FILE_EXTENSION_TXT, jsonData);
+            JSONFileIO.SaveToFile(Application.dataPath + C_WINDOWS_SAVE_LOCATION + C_FILE_NAME + C_FILE_EXTENSION_TXT, jsonData);
         }
 
         
