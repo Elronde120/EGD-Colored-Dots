@@ -39,4 +39,21 @@ public class Dot : MonoBehaviour
         if(destroyOnLerpComplete)
             Destroy(this.gameObject);
     }
+
+    public DotJSONInfo ToJson()
+    {
+        DotJSONInfo info;
+        info.position = transform.position;
+        info.scale = transform.localScale;
+        info.color = GetComponentInChildren<SpriteRenderer>().color;
+        return info;
+    }
+
+    [System.Serializable]
+    public struct DotJSONInfo
+    {
+        public Vector3 position;
+        public Vector3 scale;
+        public Color color;
+    }
 }

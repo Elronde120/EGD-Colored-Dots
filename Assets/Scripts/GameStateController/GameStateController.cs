@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameStateController : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GameStateController : MonoBehaviour
     private GameState _currentState = GameState.Menu;
 
     [SerializeField] private MusicController musicController;
-    [SerializeField] private DotSpawner spawner;
+    [FormerlySerializedAs("spawner")] [SerializeField] private DotManager manager;
     [SerializeField] private CameraZoom zoom;
     [SerializeField] private UIAlphaSetter mainMenuUIAlphaSetter;
     [SerializeField] private UIAlphaSetter dotsUIAlphaSetter;
@@ -47,7 +48,7 @@ public class GameStateController : MonoBehaviour
         mainMenuUIAlphaSetter.LerpAlpha(0, 0.5f, false);
         zoom.ZoomLerp(10, 1.5f);
         yield return new WaitForSeconds(1.5f);
-        spawner.ShowDots(1.5f);
+        manager.ShowDots(1.5f);
         dotsUIAlphaSetter.LerpAlpha(1,  1.5f, true);
         yield return new WaitForSeconds(2.5f);
         musicController.FadeInResume();
@@ -58,7 +59,7 @@ public class GameStateController : MonoBehaviour
     {
         musicController.FadeOutStop();
         dotsUIAlphaSetter.LerpAlpha(0,  1.5f, false);
-        spawner.HideDots(1.5f);
+        manager.HideDots(1.5f);
         yield return new WaitForSeconds(1f);
         zoom.ZoomLerp(15, 1.5f);
         yield return new WaitForSeconds(1.5f);

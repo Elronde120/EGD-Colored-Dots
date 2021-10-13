@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 
-public class DotSpawner : MonoBehaviour
+public class DotManager : MonoBehaviour
 {
     public Vector2 regionSize = Vector2.one;
     public Vector2 spawnRegionSize;
@@ -120,6 +120,8 @@ public class DotSpawner : MonoBehaviour
                 : ColorPallet.instance.PickColorSlightAdjustment(0);
             dots.Add(circle);
         }
+
+        Debug.Log(GetDotJSONInfo());
     }
 
     public void ShowDots(float scaleTime)
@@ -133,6 +135,20 @@ public class DotSpawner : MonoBehaviour
         {
             dot.GetComponent<Dot>().ScaleLerp(new Vector3(1f, 1f, 1f), scaleTime, false);
         }
+    }
+
+    public string GetDotJSONInfo()
+    {
+        Dot.DotJSONInfo[] list = new Dot.DotJSONInfo[dots.Count];
+
+        for (int i = 0; i < list.Length; i++)
+        {
+            
+            Dot d = dots[i].GetComponent<Dot>();
+            list[i] = d.ToJson();
+        }
+        
+        return JsonHelper.ToJson(list);
     }
 
 }
