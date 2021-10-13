@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseBehaviour : MonoBehaviour
 {
@@ -76,7 +77,10 @@ public class MouseBehaviour : MonoBehaviour
         }
     }
 
-    private void RegisterClicks(){
+    private void RegisterClicks()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         if(Input.GetMouseButtonUp(0)){
             currentColor = new Color(0,0,0,0);
             pullEffector.SetActive(false);
