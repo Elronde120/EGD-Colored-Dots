@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class DotSpawner : MonoBehaviour
 {
-	public Vector2 regionSize = Vector2.one;
+    public Vector2 regionSize = Vector2.one;
     public Vector2 spawnRegionSize;
-	public int rejectionSamples = 30;
-	public float displayRadius = 1;
+    public int rejectionSamples = 30;
+    public float displayRadius = 1;
     public float minRadius = 0.1f;
     public float maxRadius = 1;
     public bool generateOnStart = true;
@@ -19,20 +19,23 @@ public class DotSpawner : MonoBehaviour
 
     public Camera mainCam;
     [SerializeField] GameObject dotPrefab;
-	List<(Vector2, float)> points;
+    List<(Vector2, float)> points;
     int index = 0;
     public List<GameObject> dots;
 
-    private void Start() {
+    private void Start()
+    {
         points = new List<(Vector2, float)>();
-        points = PoissonDiscSampling.GeneratePoints(minRadius, maxRadius, regionSize, Vector2.zero, points, true, rejectionSamples);
+        points = PoissonDiscSampling.GeneratePoints(minRadius, maxRadius, regionSize, Vector2.zero, points, true,
+            rejectionSamples);
         dots = new List<GameObject>();
-        if(generateOnStart) DrawDots();
+        if (generateOnStart) GenerateDots();
     }
 
-    private void Update() {
+    private void Update()
+    {
         RemoveDestroyed();
-        SpawnDots();    
+        SpawnDots();
     }
 
     public void CanSpawn(bool spawn)
@@ -40,9 +43,11 @@ public class DotSpawner : MonoBehaviour
         canSpawn = spawn;
     }
 
-    private void SpawnDots(){
+    private void SpawnDots()
+    {
         if (!canSpawn) return;
-        if(Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftShift)){
+        if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftShift))
+        {
             points.Clear();
             Vector3 mousePos = new Vector3(
                 Input.mousePosition.x / Screen.width,
@@ -53,30 +58,40 @@ public class DotSpawner : MonoBehaviour
             mousePos.y -= .5f;
             mousePos.y *= 2 * mainCam.orthographicSize;
             mousePos.x *= 2 * mainCam.orthographicSize * mainCam.aspect;
-            for(int i = 0; i < dots.Count; i++){
+            for (int i = 0; i < dots.Count; i++)
+            {
                 points.Add((dots[i].transform.position, dots[i].transform.localScale.x));
             }
-            points = PoissonDiscSampling.GeneratePoints(minRadius, maxRadius, spawnRegionSize, mousePos, points, false, rejectionSamples);
-            DrawDots();
+
+            points = PoissonDiscSampling.GeneratePoints(minRadius, maxRadius, spawnRegionSize, mousePos, points, false,
+                rejectionSamples);
+            GenerateDots();
         }
     }
 
-    void RemoveDestroyed(){
+    void RemoveDestroyed()
+    {
         List<GameObject> nonDestroyed = new List<GameObject>();
-        for(int i = 0; i < dots.Count; i++){
-            if(dots[i] != null) nonDestroyed.Add(dots[i]);
+        for (int i = 0; i < dots.Count; i++)
+        {
+            if (dots[i] != null) nonDestroyed.Add(dots[i]);
         }
+
         dots = nonDestroyed;
     }
 
     //Instantiates the random dots with their radii and gives them a random color
-    public void DrawDots(){
-        foreach((Vector2, float) point in points){
+    public void GenerateDots(float scaleTime)
+    {
+        foreach ((Vector2, float) point in points)
+        {
             GameObject circle = Instantiate(dotPrefab, point.Item1, Quaternion.identity, transform);
             circle.transform.localScale = new Vector3(point.Item2, point.Item2, point.Item2);
-            circle.GetComponent<Dot>().ScaleLerp(new Vector3(1,1,1), 0.25f);
-            
-            circle.GetComponentInChildren<SpriteRenderer>().color = variationSlider ? ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value) : ColorPallet.instance.PickColorSlightAdjustment(0);
+            circle.GetComponent<Dot>().ScaleLerp(new Vector3(1, 1, 1), scaleTime);
+
+            circle.GetComponentInChildren<SpriteRenderer>().color = variationSlider
+                ? ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value)
+                : ColorPallet.instance.PickColorSlightAdjustment(0);
             dots.Add(circle);
         }
     }
@@ -85,38 +100,39 @@ public class DotSpawner : MonoBehaviour
     {
         foreach (var dot in dots)
         {
-            dot.GetComponent<Dot>().ScaleLerp(new Vector3(0f,0f,0f), scaleTime, false);
+            dot.GetComponent<Dot>().ScaleLerp(new Vector3(0f, 0f, 0f), scaleTime, false);
         }
     }
-    
+
     public void DestroyDots(float scaleTime)
     {
         dots.Clear();
     }
-    
-    public void DrawDots(float scaleTime){
-        foreach((Vector2, float) point in points){
+
+    public void GenerateDots()
+    {
+        foreach ((Vector2, float) point in points)
+        {
             GameObject circle = Instantiate(dotPrefab, point.Item1, Quaternion.identity, transform);
             circle.transform.localScale = new Vector3(point.Item2, point.Item2, point.Item2);
-            circle.GetComponent<Dot>().ScaleLerp(new Vector3(1,1,1), scaleTime);
-            
-            circle.GetComponentInChildren<SpriteRenderer>().color = variationSlider ? ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value) : ColorPallet.instance.PickColorSlightAdjustment(0);
+            circle.GetComponentInChildren<SpriteRenderer>().color = variationSlider
+                ? ColorPallet.instance.PickColorSlightAdjustment(variationSlider.value)
+                : ColorPallet.instance.PickColorSlightAdjustment(0);
             dots.Add(circle);
         }
     }
-    
+
     public void ShowDots(float scaleTime)
     {
-        if (dots.Count > 0)
+        if (dots.Count == 0)
         {
-            foreach (var dot in dots)
-            {
-                dot.GetComponent<Dot>().ScaleLerp(new Vector3(1f, 1f, 1f), scaleTime, false);
-            }
+            GenerateDots();
         }
-        else
+
+        foreach (var dot in dots)
         {
-            DrawDots(scaleTime);
+            dot.GetComponent<Dot>().ScaleLerp(new Vector3(1f, 1f, 1f), scaleTime, false);
         }
     }
+
 }

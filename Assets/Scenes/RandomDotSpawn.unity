@@ -684,7 +684,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2146290807}
         m_TargetAssemblyTypeName: DotSpawner, Assembly-CSharp
-        m_MethodName: DrawDots
+        m_MethodName: GenerateDots
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
