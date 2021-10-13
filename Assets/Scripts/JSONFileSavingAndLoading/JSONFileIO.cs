@@ -18,6 +18,14 @@ public static class JSONFileIO
         reader.Close();
         return returnValue;
     }
+    
+    public static void CheckDirectory(string filePath)
+    {
+        if (!Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
+    }
 }
 
 public static class JsonHelper

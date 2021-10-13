@@ -22,21 +22,21 @@ public class TakeScreenshot : MonoBehaviour {
         
         if (OSDeterminator.OnOSX())
         {
-            CheckDirectory(Application.dataPath + C_MAC_SAVE_LOCATION);
+            JSONFileIO.CheckDirectory(Application.dataPath + C_MAC_SAVE_LOCATION);
             StartCoroutine(PCCaptureScreenCor(
                 Application.dataPath + C_MAC_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
                 objectsToDisable));
         }
         else if (OSDeterminator.OnLinux())
         {
-            CheckDirectory(Application.dataPath + C_LINUX_SAVE_LOCATION);
+            JSONFileIO.CheckDirectory(Application.dataPath + C_LINUX_SAVE_LOCATION);
             StartCoroutine(PCCaptureScreenCor(
                 Application.dataPath + C_LINUX_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
                 objectsToDisable));
         }
         else if (OSDeterminator.OnWindows())
         {
-            CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
+            JSONFileIO.CheckDirectory(Application.dataPath + C_WINDOWS_SAVE_LOCATION);
             StartCoroutine(PCCaptureScreenCor(
                 Application.dataPath + C_WINDOWS_SAVE_LOCATION + getFormattedTimestamp() + C_FILE_EXTENSION_PNG,
                 objectsToDisable));
@@ -51,13 +51,7 @@ public class TakeScreenshot : MonoBehaviour {
         return DateTime.UtcNow.ToString("yyyyMMddhhmmss");
     }
     
-    private void CheckDirectory(string filePath)
-    {
-        if (!Directory.Exists(filePath))
-        {
-            Directory.CreateDirectory(filePath);
-        }
-    }
+    
 
     
     
