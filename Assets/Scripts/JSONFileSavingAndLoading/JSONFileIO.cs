@@ -7,7 +7,7 @@ public static class JSONFileIO
     public static void SaveToFile(string path, string JSONString)
     {
         StreamWriter writer = new StreamWriter(path, false);
-        writer.WriteAsync(JSONString);
+        writer.Write(JSONString);
         writer.Close();
     }
     

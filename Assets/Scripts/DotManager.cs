@@ -148,7 +148,7 @@ public class DotManager : MonoBehaviour
             list[i] = d.ToJson();
         }
         
-        return JsonHelper.ToJson(list);
+        return JsonHelper.ToJson(list, true);
     }
 
 }
