@@ -121,7 +121,7 @@ public class DotManager : MonoBehaviour
             dots.Add(circle);
         }
 
-        Debug.Log(GetDotJSONInfo());
+        
     }
 
     public void ShowDots(float scaleTime)
