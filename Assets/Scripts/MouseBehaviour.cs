@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class MouseBehaviour : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class MouseBehaviour : MonoBehaviour
 
     public GameObject coloredPushEffector;
 
-    public DotSpawner dotSpawner;
+    [FormerlySerializedAs("dotSpawner")] public DotManager dotManager;
 
     public Camera mainCam;
 
@@ -38,7 +39,7 @@ public class MouseBehaviour : MonoBehaviour
         pullEffector.GetComponent<CircleCollider2D>().radius = pushPullRadius;
         pullAllEffector.GetComponent<CircleCollider2D>().radius = pushPullRadius;
         coloredPushEffector.GetComponent<CircleCollider2D>().radius = pushPullRadius;
-        dotSpawner.GetComponent<DotSpawner>().spawnRegionSize = new Vector2(pushPullRadius * 2, pushPullRadius * 2);
+        dotManager.GetComponent<DotManager>().spawnRegionSize = new Vector2(pushPullRadius * 2, pushPullRadius * 2);
         pushPullRadius += Input.mouseScrollDelta.y * 0.1f;
         if(pushPullRadius < 0.2f)
         {
@@ -57,14 +58,14 @@ public class MouseBehaviour : MonoBehaviour
         while(true){
             yield return new WaitForEndOfFrame();
             for(int i = 0; i < 20; i++){
-                if(dotSpawner.dots == null || dotSpawner.dots.Count == 0) continue;
+                if(dotManager.dots == null || dotManager.dots.Count == 0) continue;
                 GameObject g;
                 try{
-                    g = dotSpawner.dots[dotsIndex];
+                    g = dotManager.dots[dotsIndex];
                 }
                 catch(System.Exception){
                     dotsIndex = 0;
-                    g = dotSpawner.dots[dotsIndex];
+                    g = dotManager.dots[dotsIndex];
                 }
                 dotsIndex++;
                 if(AreColorsSimilar(g.GetComponentInChildren<SpriteRenderer>().color, currentColor)){
